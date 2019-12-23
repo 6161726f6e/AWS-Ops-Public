@@ -15,17 +15,19 @@ responseDict = client.lookup_events(
 #    ],
 #    StartTime=date.today(),
 #    EndTime=date.today(),
-    MaxResults=2,
+    MaxResults=20,
 )
-print(responseDict)
-print('----------------------------------------------------')
+#print(responseDict)
+#print('----------------------------------------------------')
 #for item in responseDict:
 #	print(item)
 
 eventsList = responseDict['Events']
 #print(events[0]['Username'])
 pp = pprint.PrettyPrinter(indent=4)
-pp.pprint(eventsList[0])
-print('----------------------------------------------------')
-pp.pprint(eventsList[1])
+i=0
+while i < len(eventsList):
+    pp.pprint(eventsList[i])
+    i=i+1
+    print('----------------------------------------------------')
 
