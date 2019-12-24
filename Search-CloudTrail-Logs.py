@@ -30,8 +30,8 @@ def pullLogs(searchPattern,timeframe):
     pp = pprint.PrettyPrinter(indent=4)
     i=0
     j=0
+    p = re.compile('.*(%s).*' % searchPattern)
     while i < len(eventsList):
-        p = re.compile('.*(%s).*'%searchPattern)
         m = p.search(eventsList[i]['CloudTrailEvent'])
         if m:
             #print(m)
