@@ -3,31 +3,33 @@
 # Summary: This script pulls logs matching a search query from CloudTrail Logs.
 # Arguments:
 #   searchPattern [OPTIONAL] - filter out logs, searching for specific string.
-#   timeframe [OPTIONAL] - number of minutes to search for
+#   startDate [OPTIONAL] - UTC Time to start search for. Format = 2019-12-25-hh:mm.
+#      Default = Beginning of current day.
+#   endDate [OPTIONAL] - UTC Time to end search for. Format = 2019-12-25-hh:mm
+#      Default = Current Time.
 
 import boto3
 import sys
 import re
 import pprint
 import argparse
-from datetime import datetime, timedelta
+from datetime import datetime, date, time
 
 # global variables
 searchPattern = ''		# default: blank filter
-timeframe = 600			# default: 10 minutes 
-startDate = datetime.today()
-endDate = datetime.today()
+startDate = datetime.combine(date.today(), time())
+endDate = datetime.now()
 
 def getArgs():
-    global searchPattern, timeframe, startDate, endDate
-     
+    global searchPattern, startDate, endDate
+    
     helpText = 'This script pulls logs matching a search query from CloudTrail Logs.'
     # initiate the parser
     parser = argparse.ArgumentParser(description = helpText)
     parser.add_argument("-V", "--version", help="Show program version", action="store_true")
     parser.add_argument("-p", "--pattern", action='store', type=str, help="Pattern to search for.  Default is \'\'")
-    parser.add_argument("-s", "--startdate",  action='store', type=str, help="Day to start search for. Format = 2019-12-25-hh:mm")
-    parser.add_argument("-e", "--enddate",  action='store', type=str, help="Day to end search for.  Format = 2019-12-25-hh:mm")
+    parser.add_argument("-s", "--startdate",  action='store', type=str, help="UTC Time to start search for. Format = 2019-12-25-hh:mm")
+    parser.add_argument("-e", "--enddate",  action='store', type=str, help="UTC Time to end search for. Format = 2019-12-25-hh:mm")
 
     # read arguments from the command line
     args = parser.parse_args()
@@ -50,12 +52,9 @@ def getArgs():
     	print("setting enddate "+str(args.enddate))
     	endDate = args.enddate
 
-
-def pullLogs(searchPattern,timeframe):
+def pullLogs(searchPattern):
     client = boto3.client('cloudtrail')
     responseDict = client.lookup_events(
-        #StartTime=datetime.utcnow() - timedelta(seconds=timeframe),
-        #EndTime=datetime.utcnow(),
         StartTime=startDate,
         EndTime=endDate,
         MaxResults=1000,
@@ -86,5 +85,4 @@ def pullLogs(searchPattern,timeframe):
 
 if __name__ == "__main__":
     getArgs()
-    #print("args = "+str(searchPattern)+" "+str(timeframe))
-    pullLogs(searchPattern,timeframe)
+    pullLogs(searchPattern)
