@@ -26,9 +26,8 @@ def getArgs():
     parser = argparse.ArgumentParser(description = helpText)
     parser.add_argument("-V", "--version", help="Show program version", action="store_true")
     parser.add_argument("-p", "--pattern", action='store', type=str, help="Pattern to search for.  Default is \'\'")
-    parser.add_argument("-t", "--timeframe",  action='store', type=int, help="Timeframe to search for in minutes.  Default is 10")
-    parser.add_argument("-s", "--startdate",  action='store', type=str, help="Day to start search for. Format = 2019-12-25")
-    parser.add_argument("-e", "--enddate",  action='store', type=str, help="Day to end search for.  Format = 2019-12-25")
+    parser.add_argument("-s", "--startdate",  action='store', type=str, help="Day to start search for. Format = 2019-12-25-hh:mm")
+    parser.add_argument("-e", "--enddate",  action='store', type=str, help="Day to end search for.  Format = 2019-12-25-hh:mm")
 
     # read arguments from the command line
     args = parser.parse_args()
@@ -42,10 +41,6 @@ def getArgs():
     if args.pattern:
     	print("setting pattern "+str(args.pattern))
     	searchPattern = args.pattern
-
-    if args.timeframe:
-    	print("setting timeframe "+str(args.timeframe))
-    	timeframe = args.timeframe
 
     if args.startdate:
     	print("setting startdate "+str(args.startdate))
@@ -90,17 +85,6 @@ def pullLogs(searchPattern,timeframe):
     print('*****************************************************')
 
 if __name__ == "__main__":
-    # Get Command Line variables or set defaults
-#    try:
-#        searchPattern = sys.argv[1]
-#    except IndexError:
-#    	print("Using Default filter \'\'")
-		#searchPattern = ''
- #   try:
-  #  	timeframe = int(sys.argv[2]) * 60
-   # except IndexError:
-    #	print("Using Default timeframe of 10 minutes")
- #       timeframe = 600     # default = 10 minutes
     getArgs()
     #print("args = "+str(searchPattern)+" "+str(timeframe))
     pullLogs(searchPattern,timeframe)
