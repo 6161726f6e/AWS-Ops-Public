@@ -62,9 +62,9 @@ def pullLogs(searchPattern,timeframe):
     j=0 # count matches
     p = re.compile('.*(%s).*' % searchPattern)
     while i < len(eventsList):
-        #m = p.search(eventsList[i]['CloudTrailEvent'])
+        m = p.search(eventsList[i]['CloudTrailEvent'])
         if m:
-            print(m)
+            #print(m)
             pp.pprint(eventsList[i]['CloudTrailEvent'])
             print('----------------------------------------------------')
             j=j+1
