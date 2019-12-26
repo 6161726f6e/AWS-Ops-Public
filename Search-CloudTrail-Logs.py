@@ -48,7 +48,7 @@ def pullLogs(searchPattern,timeframe):
     responseDict = client.lookup_events(
         StartTime=datetime.utcnow() - timedelta(seconds=timeframe),
         EndTime=datetime.utcnow(),
-        MaxResults=500,
+        MaxResults=1000,
     )
     #print(responseDict)
     #print('----------------------------------------------------')
@@ -62,7 +62,7 @@ def pullLogs(searchPattern,timeframe):
     j=0 # count matches
     p = re.compile('.*(%s).*' % searchPattern)
     while i < len(eventsList):
-        m = p.search(eventsList[i]['CloudTrailEvent'])
+        #m = p.search(eventsList[i]['CloudTrailEvent'])
         if m:
             print(m)
             pp.pprint(eventsList[i]['CloudTrailEvent'])
