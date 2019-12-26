@@ -15,24 +15,28 @@ from datetime import datetime, timedelta
 # global variables
 searchPattern = ''		# default: blank filter
 timeframe = 600			# default: 10 minutes 
+startDate = datetime.today()
+endDate = datetime.today()
 
 def getArgs():
-    global searchPattern
-    global timeframe
- 
+    global searchPattern, timeframe, startDate, endDate
+     
     helpText = 'This script pulls logs matching a search query from CloudTrail Logs.'
     # initiate the parser
     parser = argparse.ArgumentParser(description = helpText)
     parser.add_argument("-V", "--version", help="Show program version", action="store_true")
     parser.add_argument("-p", "--pattern", action='store', type=str, help="Pattern to search for.  Default is \'\'")
     parser.add_argument("-t", "--timeframe",  action='store', type=int, help="Timeframe to search for in minutes.  Default is 10")
+    parser.add_argument("-s", "--startdate",  action='store', type=str, help="Day to start search for. Format = 2019-12-25")
+    parser.add_argument("-e", "--enddate",  action='store', type=str, help="Day to end search for.  Format = 2019-12-25")
 
     # read arguments from the command line
     args = parser.parse_args()
 
     # check for --version or -V
     if args.version:
-        print("this is version 0.1")
+        print("\nPull-Cloud-Trail Version 0.1\n")
+        sys.exit()
 
     # store variables
     if args.pattern:
@@ -43,11 +47,22 @@ def getArgs():
     	print("setting timeframe "+str(args.timeframe))
     	timeframe = args.timeframe
 
+    if args.startdate:
+    	print("setting startdate "+str(args.startdate))
+    	startDate = args.startdate
+
+    if args.enddate:
+    	print("setting enddate "+str(args.enddate))
+    	endDate = args.enddate
+
+
 def pullLogs(searchPattern,timeframe):
     client = boto3.client('cloudtrail')
     responseDict = client.lookup_events(
-        StartTime=datetime.utcnow() - timedelta(seconds=timeframe),
-        EndTime=datetime.utcnow(),
+        #StartTime=datetime.utcnow() - timedelta(seconds=timeframe),
+        #EndTime=datetime.utcnow(),
+        StartTime=startDate,
+        EndTime=endDate,
         MaxResults=1000,
     )
     #print(responseDict)
@@ -87,5 +102,5 @@ if __name__ == "__main__":
     #	print("Using Default timeframe of 10 minutes")
  #       timeframe = 600     # default = 10 minutes
     getArgs()
-    print("args = "+str(searchPattern)+" "+str(timeframe))
+    #print("args = "+str(searchPattern)+" "+str(timeframe))
     pullLogs(searchPattern,timeframe)
