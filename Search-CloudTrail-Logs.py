@@ -58,7 +58,7 @@ def pullLogs(searchPattern,startDate,endDate):
     responseDict = client.lookup_events(
         StartTime=startDate,
         EndTime=endDate,
-        MaxResults=1000,
+        MaxResults=50,  #max AWS allows is 50
     )
     #print(responseDict)
     #print('----------------------------------------------------')
