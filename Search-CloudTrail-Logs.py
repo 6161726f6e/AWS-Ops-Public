@@ -16,8 +16,6 @@ import argparse
 from datetime import datetime, date, time
 
 def getArgs():
-    global searchPattern, startDate, endDate
-    
     helpText = 'This script pulls logs matching a search query from CloudTrail Logs.'
     # initiate the parser
     parser = argparse.ArgumentParser(description = helpText)
