@@ -1,5 +1,6 @@
-# Searches cloudtrail logs.
-## Options to filter by pattern and dates:
+## Searches cloudtrail logs.
+**NOTE: AWS recently changed max log entries returned to 50.  So, narrowing timeframe will provide best results.**
+### Options to filter by pattern and dates:
 
 ```
 $ python3 Search-CloudTrail-Logs.py --help
