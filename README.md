@@ -15,32 +15,170 @@ optional arguments:
   -p PATTERN, --pattern PATTERN
                         Pattern to search for. Default is ''
   -s STARTDATE, --startdate STARTDATE
-                        UTC Time to start search for. Format = 2019-12-25-hh:mm
+                        UTC Time to start search for. Format = '2019-12-25 hh:mm'
   -e ENDDATE, --enddate ENDDATE
-                        UTC Time to end search for. Format = 2019-12-25-hh:mm
+                        UTC Time to end search for. Format = '2019-12-25 hh:mm'
 
 ```
 ### Sample Search
 ```
-$ python3 Search-CloudTrail-Logs.py  -p IAMUser -s 2021-01-23-19:57 -e 2021-01-23-19:59
-setting pattern IAMUser
-setting startdate 2021-01-23-19:57
-setting enddate 2021-01-23-19:59
-('{"eventVersion":"1.08","userIdentity":{"type":"IAMUser","principalId":"XXXX","arn":"arn:aws-us:iam::XXXXXXX:user/deployment_service_account","accountId":"XXXXXX","accessKeyId":"XXXXXX","userName":"XXXXXX"},"eventTime":"2021-01-23T19:59:00Z","eventSource":"ec2.amazonaws.com","eventName":"ModifyInstanceAttribute","awsRegion":"us-west-1","sourceIPAddress":"XXXXXX","userAgent":"aws-cli/1.11.173 '
- 'Python/2.7.18 Linux/4.9.51-10.52.amzn1.x86_64 '
- 'botocore/1.7.31","errorCode":"Client.UnauthorizedOperation","errorMessage":"You '
- 'are not authorized to perform this operation. Encoded authorization failure '
- 'message: '
- 'XXXXX<REDACTED>...","requestParameters":{"instanceId":"XXXXXX","disableApiTermination":{"value":false}},"responseElements":null,"requestID":"afded655-0376-4a87-8ed5-e5424b92d862","eventID":"5c98ff54-7fbe-409c-9341-ad4e21c0941a","readOnly":false,"eventType":"AwsApiCall","managementEvent":true,"eventCategory":"Management","recipientAccountId":"XXXXXX"}')
+╰─⠠⠵ python3 Search-CloudTrail-Logs.py -p list -s '2021-01-28 11:33' -e '2021-01-28 11:35'
+setting pattern list
+setting startDate 2021-01-28 11:33
+setting endDate 2021-01-28 11:35
+{
+  "eventVersion": "1.08",
+  "userIdentity": {
+    "type": "AssumedRole",
+    "principalId": "XXXXXXX",
+    "arn": "arn:aws-us:sts::XXXXX:assumed-role/XXXXXX/XXXXXXX",
+    "accountId": "XXXXX",
+    "accessKeyId": "XXXXXX",
+    "sessionContext": {
+      "sessionIssuer": {
+        "type": "Role",
+        "principalId": "XXXXXX",
+        "arn": "arn:aws-us:iam::XXXXX:role/XXXXXX",
+        "accountId": "XXXXX",
+        "userName": "XXXXXX"
+      },
+      "webIdFederationData": {},
+      "attributes": {
+        "mfaAuthenticated": "false",
+        "creationDate": "2021-01-28T06:09:30Z"
+      },
+      "ec2RoleDelivery": "2.0"
+    }
+  },
+  "eventTime": "2021-01-28T11:35:00Z",
+  "eventSource": "ssm.amazonaws.com",
+  "eventName": "ListInstanceAssociations",
+  "awsRegion": "us-west-1",
+  "sourceIPAddress": "XXXX",
+  "userAgent": "aws-sdk-go/1.25.41 (go1.13.15; linux; amd64) amazon-ssm-agent/",
+  "requestParameters": {
+    "instanceId": "XXXXXXX",
+    "maxResults": 20
+  },
+  "responseElements": null,
+  "requestID": "XXXXXX",
+  "eventID": "XXXXXX",
+  "readOnly": true,
+  "resources": [
+    {
+      "accountId": "XXXXX",
+      "ARN": "arn:aws-us:ec2:us-west-1:XXXXX:instance/XXXXXXX"
+    }
+  ],
+  "eventType": "AwsApiCall",
+  "managementEvent": true,
+  "eventCategory": "Management",
+  "recipientAccountId": "XXXXX"
+}
 ----------------------------------------------------
-('{"eventVersion":"1.08","userIdentity":{"type":"IAMUser","principalId":"XXXXX","arn":"arn:aws-us:iam::XXXX:user/XXXX","accountId":"XXXX","accessKeyId":"XXXXX","userName":"XXXXX"},"eventTime":"2021-01-23T19:58:59Z","eventSource":"autoscaling.amazonaws.com","eventName":"DescribeAutoScalingInstances","awsRegion":"us-west-1","sourceIPAddress":"XXXXXX","userAgent":"aws-cli/1.11.173 '
- 'Python/2.7.18 Linux/4.9.51-10.52.amzn1.x86_64 '
- 'botocore/1.7.31","requestParameters":null,"responseElements":null,"requestID":"8fc202d0-d6a8-43ae-b4b8-65a04cfe75c8","eventID":"bc2919d1-e73c-44a3-87bd-85acb8363248","readOnly":true,"eventType":"AwsApiCall","managementEvent":true,"eventCategory":"Management","recipientAccountId":"XXXXXX"}')
+{
+  "eventVersion": "1.08",
+  "userIdentity": {
+    "type": "AssumedRole",
+    "principalId": "XXXXXX",
+    "arn": "arn:aws-us:sts::XXXXX:assumed-role/XXXXXX/XXXXXXX",
+    "accountId": "XXXXX",
+    "accessKeyId": "XXXXXX",
+    "sessionContext": {
+      "sessionIssuer": {
+        "type": "Role",
+        "principalId": "XXXXXX",
+        "arn": "arn:aws-us:iam::XXXXX:role/XXXXXX",
+        "accountId": "XXXXX",
+        "userName": "XXXXXX"
+      },
+      "webIdFederationData": {},
+      "attributes": {
+        "mfaAuthenticated": "false",
+        "creationDate": "2021-01-28T07:18:04Z"
+      },
+      "ec2RoleDelivery": "2.0"
+    }
+  },
+  "eventTime": "2021-01-28T11:34:34Z",
+  "eventSource": "ssm.amazonaws.com",
+  "eventName": "ListInstanceAssociations",
+  "awsRegion": "us-west-1",
+  "sourceIPAddress": "XXXX",
+  "userAgent": "aws-sdk-go/1.25.41 (go1.12.11; windows; amd64) amazon-ssm-agent/",
+  "requestParameters": {
+    "instanceId": "XXXXXXX",
+    "maxResults": 20
+  },
+  "responseElements": null,
+  "requestID": "XXXXXX",
+  "eventID": "XXXXX",
+  "readOnly": true,
+  "resources": [
+    {
+      "accountId": "XXXXX",
+      "ARN": "arn:aws-us:ec2:us-west-1:XXXXX:instance/XXXXXXX"
+    }
+  ],
+  "eventType": "AwsApiCall",
+  "managementEvent": true,
+  "eventCategory": "Management",
+  "recipientAccountId": "XXXXX"
+}
+----------------------------------------------------
+{
+  "eventVersion": "1.08",
+  "userIdentity": {
+    "type": "AssumedRole",
+    "principalId": "XXXXXX",
+    "arn": "arn:aws-us:sts::XXXXX:assumed-role/XXXXXXX/XXXXXXX",
+    "accountId": "XXXXX",
+    "accessKeyId": "XXXXXXXXXXXXXXXXXX",
+    "sessionContext": {
+      "sessionIssuer": {
+        "type": "Role",
+        "principalId": "XXXXXXXXXXXXXXXX",
+        "arn": "arn:aws-us:iam::XXXXX:role/XXXXXXXX",
+        "accountId": "XXXXX",
+        "userName": "XXXXXXXXX"
+      },
+      "webIdFederationData": {},
+      "attributes": {
+        "mfaAuthenticated": "false",
+        "creationDate": "2021-01-28T09:02:49Z"
+      },
+      "ec2RoleDelivery": "2.0"
+    }
+  },
+  "eventTime": "2021-01-28T11:33:00Z",
+  "eventSource": "ssm.amazonaws.com",
+  "eventName": "ListInstanceAssociations",
+  "awsRegion": "us-west-1",
+  "sourceIPAddress": "XXXXXXX",
+  "userAgent": "aws-sdk-go/1.25.41 (go1.13.15; linux; amd64) amazon-ssm-agent/",
+  "requestParameters": {
+    "instanceId": "XXXXXXXXX",
+    "maxResults": 20
+  },
+  "responseElements": null,
+  "requestID": "XXXXXXX",
+  "eventID": "XXXXXXXXX",
+  "readOnly": true,
+  "resources": [
+    {
+      "accountId": "XXXXX",
+      "ARN": "arn:aws-us:ec2:us-west-1:XXXXX:instance/XXXXX"
+    }
+  ],
+  "eventType": "AwsApiCall",
+  "managementEvent": true,
+  "eventCategory": "Management",
+  "recipientAccountId": "XXXXX"
+}
 ----------------------------------------------------
 
 ********************** SUMMARY **********************
-PULLED 50 LOG ENTRIES
-SEARCH FOR 'IAMUser' yielded 2 results
+PULLED 36 LOG ENTRIES
+SEARCH FOR 'list' yielded 3 results
 *****************************************************
-
 ```

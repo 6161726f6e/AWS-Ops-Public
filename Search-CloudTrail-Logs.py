@@ -3,9 +3,9 @@
 # Summary: This script pulls logs matching a search query from CloudTrail Logs.
 # Arguments:
 #   searchPattern [OPTIONAL] - filter out logs, searching for specific string.
-#   startDate [OPTIONAL] - UTC Time to start search for. Format = 2019-12-25-hh:mm.
+#   startDate [OPTIONAL] - UTC Time to start search for. Format = '2019-12-25 hh:mm'.
 #      Default = Beginning of current day.
-#   endDate [OPTIONAL] - UTC Time to end search for. Format = 2019-12-25-hh:mm
+#   endDate [OPTIONAL] - UTC Time to end search for. Format = '2019-12-25 hh:mm'
 #      Default = Current Time.
 
 import boto3
@@ -21,15 +21,15 @@ def getArgs():
     parser = argparse.ArgumentParser(description = helpText)
     parser.add_argument("-V", "--version", help="Show program version", action="store_true")
     parser.add_argument("-p", "--pattern", action='store', type=str, help="Pattern to search for.  Default is \'\'")
-    parser.add_argument("-s", "--startDate",  action='store', type=str, help="UTC Time to start search for. Format = 2019-12-25-hh:mm")
-    parser.add_argument("-e", "--endDate",  action='store', type=str, help="UTC Time to end search for. Format = 2019-12-25-hh:mm")
+    parser.add_argument("-s", "--startDate",  action='store', type=str, help="UTC Time to start search for. Format = \'2019-12-25 hh:mm\'")
+    parser.add_argument("-e", "--endDate",  action='store', type=str, help="UTC Time to end search for. Format = \'2019-12-25 hh:mm\'")
 
     # read arguments from the command line
     args = parser.parse_args()
 
     # check for --version or -V
     if args.version:
-        print("\nPull-Cloud-Trail Version 0.1\n")
+        print("\nPull-Cloud-Trail Version 0.2\n")
         sys.exit()
 
     # store variables
@@ -50,6 +50,8 @@ def getArgs():
     	endDate = args.endDate
     else:
         endDate = datetime.now()
+        print("setting endDate "+str(endDate))
+
 
     return(searchPattern,startDate,endDate)
 
