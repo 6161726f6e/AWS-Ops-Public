@@ -70,7 +70,7 @@ def pullLogs(searchPattern,startDate,endDate):
     pp = pprint.PrettyPrinter(indent=4)
     i=0	# count total
     j=0 # count matches
-    p = re.compile('.*(%s).*' % searchPattern)
+    p = re.compile('.*(%s).*' % searchPattern, re.IGNORECASE)
     while i < len(eventsList):
         m = p.search(eventsList[i]['CloudTrailEvent'])
         if m:
