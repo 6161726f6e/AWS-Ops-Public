@@ -1,5 +1,6 @@
 ## Searches cloudtrail logs.
 **NOTE: AWS recently changed max log entries returned to 50.  So, narrowing timeframe will provide best results.**
+**NOTE: Searches are case-INsensitive**
 ### Options to filter by pattern and dates:
 
 ```
