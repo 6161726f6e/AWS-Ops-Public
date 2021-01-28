@@ -11,7 +11,7 @@
 import boto3
 import sys
 import re
-import pprint
+import json
 import argparse
 from datetime import datetime, date, time
 
@@ -67,15 +67,15 @@ def pullLogs(searchPattern,startDate,endDate):
 
     eventsList = responseDict['Events']
     #print(events[0]['Username'])
-    pp = pprint.PrettyPrinter(indent=4)
     i=0	# count total
     j=0 # count matches
     p = re.compile('.*(%s).*' % searchPattern, re.IGNORECASE)
     while i < len(eventsList):
         m = p.search(eventsList[i]['CloudTrailEvent'])
         if m:
-            #print(m)
-            pp.pprint(eventsList[i]['CloudTrailEvent'])
+            jsonEvent=json.loads(eventsList[i]['CloudTrailEvent'])
+            jsonPrettyEvent=json.dumps(jsonEvent, indent=2)
+            print(jsonPrettyEvent)
             print('----------------------------------------------------')
             j=j+1
         i=i+1
